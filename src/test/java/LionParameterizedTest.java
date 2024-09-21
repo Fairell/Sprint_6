@@ -3,12 +3,17 @@ import com.example.Lion;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
 import java.util.Arrays;
 import java.util.Collection;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class LionParameterizedTest {
+
+    private static final String MALE = "Самец";
+    private static final String FEMALE = "Самка";
 
     private final String sex;
     private final boolean expectedHasMane;
@@ -20,9 +25,9 @@ public class LionParameterizedTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                { "Самец", true },
-                { "Самка", false }
+        return Arrays.asList(new Object[][]{
+                {MALE, true},
+                {FEMALE, false}
         });
     }
 

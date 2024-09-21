@@ -24,24 +24,22 @@ public class AnimalParameterizedTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {"Травоядное", Arrays.asList("Трава", "Различные растения")},
-                {"Хищник", Arrays.asList("Животные", "Птицы", "Рыба")},
-                {"Неизвестно", new Exception("Неизвестный вид животного, используйте значение Травоядное или Хищник")}
+                {"Хищник", Arrays.asList("Животные", "Птицы", "Рыба")}
         });
     }
 
     @Test
-    public void testGetFood() {
+    public void testGetFoodValidAnimals() throws Exception {
         Animal animal = new Animal();
+        assertEquals(expectedResult, animal.getFood(animalKind));
+    }
 
-        if (expectedResult instanceof Exception) {
-            Exception exception = assertThrows(Exception.class, () -> animal.getFood(animalKind));
-            assertEquals(((Exception) expectedResult).getMessage(), exception.getMessage());
-        } else {
-            try {
-                assertEquals(expectedResult, animal.getFood(animalKind));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    @Test
+    public void testGetFoodInvalidAnimalThrowsException() {
+        Animal animal = new Animal();
+        String invalidAnimalKind = "Неизвестно";
+        Exception exception = assertThrows(Exception.class, () -> animal.getFood(invalidAnimalKind));
+        String expectedMessage = "Неизвестный вид животного, используйте значение Травоядное или Хищник";
+        assertEquals(expectedMessage, exception.getMessage());
     }
 }
